@@ -203,9 +203,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI
 
-# TEMP: Enable transitional log for Privileged permissions
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.control_privapp_permissions=log
+# Enforce privapp-permissions whitelist
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.control_privapp_permissions=enforce
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
