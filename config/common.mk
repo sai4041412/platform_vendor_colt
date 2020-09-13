@@ -1,7 +1,7 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
-PRODUCT_BRAND ?= Colt-OS
+PRODUCT_BRAND ?= ColtOS
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -25,29 +25,6 @@ else
 # Enable ADB authentication
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
-
-# Enable WiFi Display
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.wfd.nohdcp=1 \
-    persist.debug.wfd.enable=1 \
-    persist.sys.wfd.virtual=0
-
-# TEMP: Enable transitional log for Privileged permissions
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.control_privapp_permissions=log
-
-# Storage manager
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.storage_manager.enabled=true
-
-# Media
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    media.recorder.show_manufacturer_and_model=true
-
-# Tethering - allow without requiring a provisioning app
-# (for devices that check this)
-PRODUCT_PROPERTY_OVERRIDES += \
-    net.tethering.noprovisioning=true
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
@@ -96,19 +73,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/Vendor_045e_Product_0719.kl
 
-# This is Colt!
-PRODUCT_COPY_FILES += \
-    vendor/colt/config/permissions/privapp-permissions-colt-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-colt.xml \
-    vendor/colt/config/permissions/privapp-permissions-colt-system.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-colt.xml
-
-# Hidden API whitelist
-PRODUCT_COPY_FILES += \
-    vendor/colt/config/permissions/colt-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/colt-hiddenapi-package-whitelist.xml
-
-# Power whitelist
-PRODUCT_COPY_FILES += \
-    vendor/colt/config/permissions/colt-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/colt-power-whitelist.xml
-
 # Include AOSP audio files
 include vendor/colt/config/aosp_audio.mk
 
@@ -135,7 +99,7 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 $(call inherit-product, vendor/colt/config/bootanimation.mk)
 
 # ColtSpares
-$(call inherit-product, vendor/ColtSpares/ColtSpares.mk)
+#$(call inherit-product, vendor/ColtSpares/ColtSpares.mk)
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     keyguard.no_require_sim=true \
@@ -159,12 +123,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Colt packages
 PRODUCT_PACKAGES += \
-    CustomDoze \
-    OmniJaws \
-    OmniStyle \
-    OmniSwitch \
-    Phonograph \
-    StitchImage \
     ThemePicker \
     WallpaperPicker2
 
@@ -244,6 +202,18 @@ PRODUCT_PACKAGES += \
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI
+
+# TEMP: Enable transitional log for Privileged permissions
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.control_privapp_permissions=log
+
+# Storage manager
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.storage_manager.enabled=true
+
+# Media
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    media.recorder.show_manufacturer_and_model=true
 
 # Common overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/colt/overlay/common

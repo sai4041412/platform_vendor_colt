@@ -78,9 +78,6 @@
     <!-- Whether or not swipe up gesture's opt-in setting is available on this device -->
     <bool name="config_swipe_up_gesture_setting_available">true</bool>
 
-    <!-- Component name for default assistant on this device -->
-    <string name="config_defaultAssistantComponentName">com.google.android.googlequicksearchbox/com.google.android.voiceinteraction.GsaVoiceInteractionService</string>
-
     <!-- The package name for the default wellbeing app.
          This package must be trusted, as it has the permissions to control other applications
          on the device.
@@ -88,37 +85,6 @@
      -->
     <string name="config_defaultWellbeingPackage">com.google.android.apps.wellbeing</string>
 
-    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
-    <string name="config_headlineFontFamily">google-sans</string>
-    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
-    <string name="config_headlineFontFamilyMedium">google-sans-medium</string>
-    <!-- Allows setting custom fontFeatureSettings on specific text. -->
-    <string name="config_headlineFontFeatureSettings">ss03</string>
-
-    <!-- Colon separated list of package names that should be granted DND access -->
-    <string name="config_defaultDndAccessPackages" translatable="false">com.google.android.gms:com.google.android.GoogleCamera:com.google.intelligence.sense:com.google.android.settings.intelligence</string>
-
-    <!-- An array of packages for which notifications cannot be blocked.
-         Should only be used for core device functionality that must not be
-         rendered inoperative for safety reasons, like the phone dialer and
-         SMS handler. -->
-    <string-array translatable="false" name="config_nonBlockableNotificationPackages">
-        <item>com.android.dialer</item>
-        <item>com.android.messaging</item>
-        <item>com.google.android.dialer</item>
-        <item>com.google.android.dialer:phone_incoming_call</item>
-        <item>com.google.android.deskclock:Firing</item>
-        <item>com.google.android.setupwizard</item>
-        <item>com.google.android.apps.pixelmigrate</item>
-    </string-array>
-
-    <!-- Flag indicating whether the assist disclosure can be disabled using
-         ASSIST_DISCLOSURE_ENABLED. -->
-    <bool name="config_allowDisablingAssistDisclosure">true</bool>
-
     <!-- Flag indicating whether we should enable the adaptive sleep.-->
     <bool name="config_adaptive_sleep_available">true</bool>
-
-    <!-- Whether device supports an alt. ambient display -->
-    <bool name="config_alt_ambient_display">true</bool>
 </resources>

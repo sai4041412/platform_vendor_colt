@@ -1,4 +1,4 @@
-# Copyright (C) 2020 ColtOS Project
+# Copyright (C) 2020 The ColtOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
 # limitations under the License.
 
 # Versioning System
-COLT_MAJOR_VERSION = 10.0
+COLT_MAJOR_VERSION = 11.0
 
-COLT_RELEASE_VERSION = v6.4Smokey
+COLT_RELEASE_VERSION = v7.0Alpha
 
 COLT_BUILD_TYPE ?= Unofficial
 
