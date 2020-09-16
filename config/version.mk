@@ -12,19 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COLT_TAG=Android10
-COLT_VERSION := V5.0
+# Versioning System
+COLT_MAJOR_VERSION = 11.0
 
-# COLT RELEASE VERSION
-ifndef COLT_BUILD_TYPE
-    COLT_BUILD_TYPE := Unofficial
-endif
+COLT_RELEASE_VERSION = v7.0
 
-TARGET_PRODUCT_SHORT := $(subst colt_,,$(COLT_BUILD_TYPE))
+COLT_BUILD_TYPE ?= Unofficial
 
+COLT_BUILD_DATE := $(shell date +"%Y%m%d")
 
-COLT_DATE := $(shell date -u +%d-%m-%Y)
+TARGET_PRODUCT_SHORT := $(subst colt_,,$(COLT_BUILD))
 
-COLT_FINGERPRINT := ColtOS-10-$(COLT_VERSION)/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(shell date -u +%Y%m%d)/$(shell date -u +%H%M)
+COLT_VERSION := ColtOS-$(COLT_RELEASE_VERSION)-$(COLT_BUILD)-$(COLT_BUILD_DATE)-$(COLT_BUILD_TYPE)
 
-COLT_BUILD_VERSION := ColtOS-10-$(COLT_VERSION)-$(shell date -u +%Y%m%d)-$(COLT_BUILD)-$(COLT_BUILD_TYPE)
+COLT_MOD_VERSION := $(COLT_MAJOR_VERSION)-$(COLT_RELEASE_VERSION)
+
+COLT_DISPLAY_VERSION := ColtOS-$(COLT_RELEASE_VERSION)-$(COLT_BUILD_TYPE)
+
+COLT_FINGERPRINT := ColtOS/$(COLT_MOD_VERSION)/$(TARGET_PRODUCT_SHORT)/$(COLT_BUILD_DATE)
