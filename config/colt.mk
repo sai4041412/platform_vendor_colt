@@ -39,37 +39,9 @@ PRODUCT_GENERIC_PROPERTIES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.wfd.nohdcp=1
 
-# Set cache location
-ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.device.cache_dir=/data/cache
-else
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.device.cache_dir=/cache
-endif
-
-#Colt Wallpapers
-  PRODUCT_PACKAGES += \
-     ColtPapers
-
-# Cutout control overlays
-PRODUCT_PACKAGES += \
-    HideCutout \
-    StatusBarStock
-
-#Build Simple Gallery
-  PRODUCT_PACKAGES += \
-     Recorder \
-
 # Some more permissions
 PRODUCT_COPY_FILES += \
     vendor/colt/prebuilt/common/etc/permissions/privapp-permissions-recorder.xml:system/etc/permissions/privapp-permissions-recorder.xml \
     vendor/colt/prebuilt/common/etc/permissions/org.pixelexperience.recorder.xml:system/etc/permissions/org.pixelexperience.recorder.xml
 
 
-# ColtOS OTA
-$(call inherit-product-if-exists, vendor/colt/config/ota.mk)
-
-# Long screenshot
-PRODUCT_PACKAGES += \
-    Longshot
