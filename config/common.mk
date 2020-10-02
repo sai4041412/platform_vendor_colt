@@ -116,8 +116,14 @@ PRODUCT_PACKAGES += \
 # Inclusion of coltspares
 -include vendor/ColtSpares/ColtSpares.mk
 
+# Navbar
+PRODUCT_PACKAGES += \
+    GesturalNavigationOverlayLong \
+    GesturalNavigationOverlayMedium
+
 # Blurs
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.sf.blurs_are_expensive=1 \
     ro.surface_flinger.supports_background_blur=1
+
 -include packages/apps/Plugins/plugins.mk
