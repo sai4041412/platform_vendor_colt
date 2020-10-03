@@ -123,6 +123,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Colt packages
 PRODUCT_PACKAGES += \
+    EnigmaLauncher \
     ThemePicker \
     WallpaperPicker2
 
