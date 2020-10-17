@@ -76,6 +76,7 @@ SOONG_CONFIG_coltGlobalVars_disable_postrender_cleanup := $(TARGET_DISABLE_POSTR
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS ?= 0
 TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY ?= libcamera_parameters
 TARGET_SURFACEFLINGER_FOD_LIB ?= surfaceflinger_fod_lib
