@@ -108,3 +108,6 @@ PRODUCT_COPY_FILES += \
 
 # Inclusion of colt specific files
 -include vendor/colt/config/version.mk
+
+# Inclusion of coltspares
+-include vendor/ColtSpares/ColtSpares.mk
