@@ -47,7 +47,7 @@ trap cleanup 0
 #
 # $1: device name
 # $2: vendor name
-# $3: NITROGEN root directory
+# $3: COLT root directory
 # $4: is common device - optional, default to false
 # $5: cleanup - optional, default to true
 # $6: custom vendor makefile name - optional, default to false
@@ -68,15 +68,15 @@ function setup_vendor() {
         exit 1
     fi
 
-    export NITROGEN_ROOT="$3"
-    if [ ! -d "$NITROGEN_ROOT" ]; then
-        echo "\$NITROGEN_ROOT must be set and valid before including this script!"
+    export COLT_ROOT="$3"
+    if [ ! -d "$COLT_ROOT" ]; then
+        echo "\$COLT_ROOT must be set and valid before including this script!"
         exit 1
     fi
 
     export OUTDIR=vendor/"$VENDOR"/"$DEVICE"
-    if [ ! -d "$NITROGEN_ROOT/$OUTDIR" ]; then
-        mkdir -p "$NITROGEN_ROOT/$OUTDIR"
+    if [ ! -d "$COLT_ROOT/$OUTDIR" ]; then
+        mkdir -p "$COLT_ROOT/$OUTDIR"
     fi
 
     VNDNAME="$6"
@@ -84,10 +84,10 @@ function setup_vendor() {
         VNDNAME="$DEVICE"
     fi
 
-    export PRODUCTMK="$NITROGEN_ROOT"/"$OUTDIR"/"$VNDNAME"-vendor.mk
-    export ANDROIDBP="$NITROGEN_ROOT"/"$OUTDIR"/Android.bp
-    export ANDROIDMK="$NITROGEN_ROOT"/"$OUTDIR"/Android.mk
-    export BOARDMK="$NITROGEN_ROOT"/"$OUTDIR"/BoardConfigVendor.mk
+    export PRODUCTMK="$COLT_ROOT"/"$OUTDIR"/"$VNDNAME"-vendor.mk
+    export ANDROIDBP="$COLT_ROOT"/"$OUTDIR"/Android.bp
+    export ANDROIDMK="$COLT_ROOT"/"$OUTDIR"/Android.mk
+    export BOARDMK="$COLT_ROOT"/"$OUTDIR"/BoardConfigVendor.mk
 
     if [ "$4" == "true" ] || [ "$4" == "1" ]; then
         COMMON=1
@@ -885,11 +885,11 @@ function write_blueprint_header() {
     fi
 
     if [ $BLUEPRINT_INITIAL_COPYRIGHT_YEAR -eq $YEAR ]; then
-        printf " * Copyright (C) $YEAR Nitrogen\n" >> $1
+        printf " * Copyright (C) $YEAR Colt\n" >> $1
     elif [ $BLUEPRINT_INITIAL_COPYRIGHT_YEAR -le 2019 ]; then
-        printf " * Copyright (C) 2019-$YEAR Nitrogen\n" >> $1
+        printf " * Copyright (C) 2019-$YEAR Colt\n" >> $1
     else
-        printf " * Copyright (C) $BLUEPRINT_INITIAL_COPYRIGHT_YEAR-$YEAR Nitrogen\n" >> $1
+        printf " * Copyright (C) $BLUEPRINT_INITIAL_COPYRIGHT_YEAR-$YEAR Colt\n" >> $1
     fi
 
     cat << EOF >> $1
@@ -938,16 +938,16 @@ function write_makefile_header() {
             printf "# Copyright (C) 2016 The CyanogenMod Project\n" > $1
         fi
         if [ $YEAR -eq 2017 ]; then
-            printf "# Copyright (C) 2017 Nitrogen\n" >> $1
+            printf "# Copyright (C) 2017 Colt\n" >> $1
         elif [ $INITIAL_COPYRIGHT_YEAR -eq $YEAR ]; then
-            printf "# Copyright (C) $YEAR Nitrogen\n" >> $1
+            printf "# Copyright (C) $YEAR Colt\n" >> $1
         elif [ $INITIAL_COPYRIGHT_YEAR -le 2017 ]; then
-            printf "# Copyright (C) 2017-$YEAR Nitrogen\n" >> $1
+            printf "# Copyright (C) 2017-$YEAR Colt\n" >> $1
         else
-            printf "# Copyright (C) $INITIAL_COPYRIGHT_YEAR-$YEAR Nitrogen\n" >> $1
+            printf "# Copyright (C) $INITIAL_COPYRIGHT_YEAR-$YEAR Colt\n" >> $1
         fi
     else
-        printf "# Copyright (C) $YEAR Nitrogen\n" > $1
+        printf "# Copyright (C) $YEAR Colt\n" > $1
     fi
 
     cat << EOF >> $1
@@ -1192,7 +1192,7 @@ function get_file() {
 # Convert apk|jar .odex in the corresposing classes.dex
 #
 function oat2dex() {
-    local NITROGEN_TARGET="$1"
+    local COLT_TARGET="$1"
     local OEM_TARGET="$2"
     local SRC="$3"
     local TARGET=
@@ -1200,16 +1200,16 @@ function oat2dex() {
     local HOST="$(uname | tr '[:upper:]' '[:lower:]')"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
-        export BAKSMALIJAR="$NITROGEN_ROOT"/prebuilts/tools-lineage/common/smali/baksmali.jar
-        export SMALIJAR="$NITROGEN_ROOT"/prebuilts/tools-lineage/common/smali/smali.jar
+        export BAKSMALIJAR="$COLT_ROOT"/prebuilts/tools-colt/common/smali/baksmali.jar
+        export SMALIJAR="$COLT_ROOT"/prebuilts/tools-colt/common/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$NITROGEN_ROOT"/prebuilts/tools-lineage/${HOST}-x86/bin/vdexExtractor
+        export VDEXEXTRACTOR="$COLT_ROOT"/prebuilts/tools-colt/${HOST}-x86/bin/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$NITROGEN_ROOT"/prebuilts/tools-lineage/${HOST}-x86/bin/compact_dex_converter
+        export CDEXCONVERTER="$COLT_ROOT"/prebuilts/tools-colt/${HOST}-x86/bin/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -1229,11 +1229,11 @@ function oat2dex() {
         FULLY_DEODEXED=1 && return 0 # system is fully deodexed, return
     fi
 
-    if [ ! -f "$NITROGEN_TARGET" ]; then
+    if [ ! -f "$COLT_TARGET" ]; then
         return;
     fi
 
-    if grep "classes.dex" "$NITROGEN_TARGET" >/dev/null; then
+    if grep "classes.dex" "$COLT_TARGET" >/dev/null; then
         return 0 # target apk|jar is already odexed, return
     fi
 
@@ -1261,7 +1261,7 @@ function oat2dex() {
                 java -jar "$BAKSMALIJAR" deodex -o "$TMPDIR/dexout" -b "$BOOTOAT" -d "$TMPDIR" "$TMPDIR/$(basename "$OAT")"
                 java -jar "$SMALIJAR" assemble "$TMPDIR/dexout" -o "$TMPDIR/classes.dex"
             fi
-        elif [[ "$NITROGEN_TARGET" =~ .jar$ ]]; then
+        elif [[ "$COLT_TARGET" =~ .jar$ ]]; then
             JAROAT="$TMPDIR/system/framework/$ARCH/boot-$(basename ${OEM_TARGET%.*}).oat"
             JARVDEX="/system/framework/boot-$(basename ${OEM_TARGET%.*}).vdex"
             if [ ! -f "$JAROAT" ]; then
@@ -1456,7 +1456,7 @@ function extract() {
     local FIXUP_HASHLIST=( ${PRODUCT_COPY_FILES_FIXUP_HASHES[@]} ${PRODUCT_PACKAGES_FIXUP_HASHES[@]} )
     local PRODUCT_COPY_FILES_COUNT=${#PRODUCT_COPY_FILES_LIST[@]}
     local COUNT=${#FILELIST[@]}
-    local OUTPUT_ROOT="$NITROGEN_ROOT"/"$OUTDIR"/proprietary
+    local OUTPUT_ROOT="$COLT_ROOT"/"$OUTDIR"/proprietary
     local OUTPUT_TMP="$TMPDIR"/"$OUTDIR"/proprietary
 
     if [ "$SRC" = "adb" ]; then
@@ -1493,7 +1493,7 @@ function extract() {
                 fi
                 if [ -a "$DUMPDIR"/"$PARTITION".new.dat ]; then
                     echo "Converting "$PARTITION".new.dat to "$PARTITION".img"
-                    python "$NITROGEN_ROOT"/vendor/Nitrogen/build/tools/sdat2img.py "$DUMPDIR"/"$PARTITION".transfer.list "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION".img 2>&1
+                    python "$COLT_ROOT"/vendor/COLT/build/tools/sdat2img.py "$DUMPDIR"/"$PARTITION".transfer.list "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION".img 2>&1
                     rm -rf "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION"
                     mkdir "$DUMPDIR"/"$PARTITION" "$DUMPDIR"/tmp
                     echo "Requesting sudo access to mount the "$PARTITION".img"
@@ -1583,7 +1583,7 @@ function extract() {
             printf '    + keeping pinned file with hash %s\n' "${HASH}"
         else
             FOUND=false
-            # Try Nitrogen target first.
+            # Try Colt target first.
             # Also try to search for files stripped of
             # the "/system" prefix, if we're actually extracting
             # from a system image.
@@ -1671,7 +1671,7 @@ function extract_firmware() {
     local FILELIST=( ${PRODUCT_COPY_FILES_LIST[@]} )
     local COUNT=${#FILELIST[@]}
     local SRC="$2"
-    local OUTPUT_DIR="$NITROGEN_ROOT"/"$OUTDIR"/radio
+    local OUTPUT_DIR="$COLT_ROOT"/"$OUTDIR"/radio
 
     if [ "$VENDOR_RADIO_STATE" -eq "0" ]; then
         echo "Cleaning firmware output directory ($OUTPUT_DIR).."
