@@ -88,6 +88,7 @@ PRODUCT_PACKAGES += \
     Launcher3 \
     StitchImage \
     messaging \
+    Snap \
     Stk \
     Terminal
 
