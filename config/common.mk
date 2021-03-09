@@ -92,6 +92,15 @@ PRODUCT_PACKAGES += \
     Stk \
     Terminal
 
+# Filesystems tools
+PRODUCT_PACKAGES += \
+    fsck.exfat \
+    fsck.ntfs \
+    mke2fs \
+    mkfs.exfat \
+    mkfs.ntfs \
+    mount.ntfs
+
 # Init.d script support
 PRODUCT_COPY_FILES += \
     vendor/colt/prebuilt/common/bin/sysinit:system/bin/sysinit \
