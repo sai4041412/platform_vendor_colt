@@ -124,7 +124,8 @@ PRODUCT_COPY_FILES += \
 
 # Priv-app config
 PRODUCT_COPY_FILES += \
-    vendor/colt/config/permissions/privapp-permissions-colt.xml:system/etc/permissions/privapp-permissions-colt.xml
+    vendor/colt/config/permissions/privapp-permissions-colt.xml:system/etc/permissions/privapp-permissions-colt.xml \
+    vendor/colt/config/permissions/privapp-permissions-google_prebuilt.xml:system/etc/permissions/privapp-permissions-google_prebuilt.xml
 
 # Themes
 PRODUCT_PACKAGES += \
